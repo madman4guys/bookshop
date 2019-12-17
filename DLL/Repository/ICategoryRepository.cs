@@ -13,6 +13,7 @@ namespace DLL.Repository
         Task<List<Category>> GetAllCategory();
         Task<bool> DeleteCategory(Category category);
         Task<Category> GetACategory(long id);
+        Task<Category> NameExits(string name);
     }
 
     public class CategoryRepository : ICategoryRepository
@@ -45,6 +46,11 @@ namespace DLL.Repository
         public async Task<Category> GetACategory(long id)
         {
             return await _context.Categories.FirstOrDefaultAsync(x => x.CategoryId == id);
+        }
+
+        public async Task<Category> NameExits(string name)
+        {
+            return await _context.Categories.FirstOrDefaultAsync(x => x.Name == name);
         }
     }
 }

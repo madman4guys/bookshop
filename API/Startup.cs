@@ -6,6 +6,7 @@ using BLL;
 using BLL.Services;
 using DLL;
 using DLL.Context;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,7 +32,7 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation();
             ApiVersioningConfigure(services);
             SwaggerConfigure(services);
             DatabaseConfigure(services);

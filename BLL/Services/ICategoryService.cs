@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BLL.Request;
 using DLL.Model;
 using DLL.Repository;
 
@@ -8,10 +9,11 @@ namespace BLL.Services
 {
     public interface ICategoryService
     {
-        Task<Category> AddCategory(Category category);
+        Task<Category> AddCategory(CategoryInsertViewModel category);
         Task<List<Category>> GetAllCategory();
         Task<Category> DeleteCategory(long  categoryId);
         Task<Category> GetACategory(long id);
+        Task<bool> NameExits(string name);
     }
 
     public class CategoryService : ICategoryService
@@ -23,13 +25,18 @@ namespace BLL.Services
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<Category> AddCategory(Category category)
+        public async Task<Category> AddCategory(CategoryInsertViewModel category)
         {
-            var result = await _categoryRepository.AddCategory(category);
+            var newCategory = new Category()
+            {
+                Name = category.Name,
+                Description = category.Description
+            };
+            var result = await _categoryRepository.AddCategory(newCategory);
 
             if (result)
             {
-                return category;
+                return newCategory;
             }
             
             throw new Exception("category not insert successfully");
@@ -64,6 +71,13 @@ namespace BLL.Services
             }
 
             return result;
+        }
+
+        public async Task<bool> NameExits(string name)
+        {
+            var result = await _categoryRepository.NameExits(name);
+
+            return result != null;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using BLL.Request;
 using BLL.Services;
 using DLL.Model;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,7 @@ namespace API.Controllers.v1
         }
         
         [HttpPost]
-        public async Task<IActionResult> Insert(Category category)
+        public async Task<IActionResult> Insert(CategoryInsertViewModel category)
         {
             return Ok(await _categoryService.AddCategory(category));
         }
