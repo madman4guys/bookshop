@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BLL;
+using BLL.Services;
+using DLL;
 using DLL.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,11 +35,8 @@ namespace API
             ApiVersioningConfigure(services);
             SwaggerConfigure(services);
             DatabaseConfigure(services);
-            
-            
-            
-
-           
+            BllDependency.LoadDependency(services);
+            DllDependency.LoadDependency(services);
         }
 
         private void DatabaseConfigure(IServiceCollection services)
